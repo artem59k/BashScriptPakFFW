@@ -1,0 +1,12 @@
+#Установщик Медиа бота в Teamtalk. Внимание: Скрипт упращает предварительную настройку и установку различных требований
+#Установка требуемых компонентов системы
+apt install git pulseaudio vlc pip p7zip
+#Скачиваем копию бота. В команде cd можно поменять путь перехода в папку. Поумолчанию выполняется команда так
+cd /home
+git clone https://github.com/gumerov-amir/TTMediaBot.git
+#Входим в папку для дальнейших опираций
+cd TTMediaBot
+#Устанавливаем требуемые модули Python
+pip3 install -r requirements.txt
+#Скачиваем Teamtalk sdk
+python3 tools/ttsdk_downloader.py
