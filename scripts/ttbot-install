@@ -10,3 +10,5 @@ cd TTMediaBot
 pip3 install -r requirements.txt
 #Скачиваем Teamtalk sdk
 python3 tools/ttsdk_downloader.py
+#компелируем локализацию
+python3 tools/compile_locales.py
