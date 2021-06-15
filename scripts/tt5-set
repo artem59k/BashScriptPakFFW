@@ -7,3 +7,18 @@ mkdir $FN
 mkdir $FN/files
 cd $FN
 tt5srv -wizard
+echo "setting systemd unit file"
+exec 1> .config/systemd/user/tt5.service
+echo "[Unit]"
+echo "Description=tt5"
+echo "After=network.target"
+echo ""
+echo "[Service]"
+echo "ExecStart=/usr/local/bin/tt5srv -wd $FN -nd"
+echo "Type=simple"
+echo "StandardOutput=syslog"
+echo "StandardError=syslog"
+echo ""
+echo "[Install]
+echo "WantedBy=default.target"
+echo ""
