@@ -10,15 +10,18 @@ tt5srv -wizard
 echo "setting systemd unit file" 
 cd
 exec 1> .config/systemd/user/tt5.service
-echo "[Unit]"
-echo "Description=tt5"
-echo "After=network.target"
-echo ""
-echo "[Service]"
-echo "ExecStart=/usr/local/bin/tt5srv -wd $FN -nd"
-echo "Type=simple"
-echo "StandardOutput=syslog"
-echo "StandardError=syslog"
-echo ""
-echo "[Install]"
-echo "WantedBy=default.target"
+echo "[Unit]" >&1
+echo "Description=tt5" >&1
+echo "After=network.target" >&1
+echo "" >&1
+echo "[Service]" >&1
+echo "ExecStart=/usr/local/bin/tt5srv -wd $FN -nd" >&1
+echo "Type=simple" >&1
+
+echo "StandardOutput=syslog" >&1
+echo "StandardError=syslog" >&1
+echo "" >&1
+echo "[Install]" >&1
+echo "WantedBy=default.target" >&1
+echo "done: the teamtalk server can be started by the systemctl --user start tt5 command"
+systemctl --user daemon-reload
