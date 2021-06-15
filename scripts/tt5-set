@@ -22,4 +22,3 @@ echo "StandardError=syslog"
 echo ""
 echo "[Install]
 echo "WantedBy=default.target"
-echo ""
