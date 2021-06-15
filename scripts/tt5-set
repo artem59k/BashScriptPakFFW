@@ -8,6 +8,7 @@ mkdir $FN/files
 cd $FN
 tt5srv -wizard
 echo "setting systemd unit file" 
+echo "done: the teamtalk server can be started by the systemctl --user start tt5 command"
 cd
 exec 1> .config/systemd/user/tt5.service
 echo "[Unit]" >&1
@@ -23,5 +24,4 @@ echo "StandardError=syslog" >&1
 echo "" >&1
 echo "[Install]" >&1
 echo "WantedBy=default.target" >&1
-echo "done: the teamtalk server can be started by the systemctl --user start tt5 command"
 systemctl --user daemon-reload
