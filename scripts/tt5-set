@@ -1,4 +1,4 @@
-#скрипт для подготовки teamtalk сервера к его настройке. Создаёт необходимые служебные папки в домашней дериктории пользователя, а затем запускает мастер настройки автоматически.
+#скрипт для запуска Teamtalk сервера. Создаёт необходимые служебные папки в домашней дериктории пользователя, а затем запускает мастер настройки автоматически. Далее: генерирует systemd сервис, затем автоматически запускает портал, добавляет сервис в автозапуск.
 #Условие данной версии  скрипта следущее: Необходимо положить исполняемый файл tt5srv по пути usr/local/bin, для того, чтобы система выполнила команду teamtalk сервера.
 #В настройках сервера в секции file derectory нужно указать filesмалыми буквами
 #Скрипт спросит вас имя рабочей папки для teamtalk сервера
@@ -7,3 +7,23 @@ mkdir $FN
 mkdir $FN/files
 cd $FN
 tt5srv -wizard
+echo "setting systemd unit file"
+read -e -p "please: enter name of yor systemd unit. The file extension will be entered automatically" systemd
+echo "done: the teamtalk server can be started by the systemctl --user start tt5 command. At the moment: it will start automatically"
+cd
+exec 1> .config/systemd/user/$systemd.service
+echo "[Unit]" >&1
+echo "Description=tt5" >&1
+echo "After=network.target" >&1
+echo "" >&1
+echo "[Service]" >&1
+echo "ExecStart=/usr/local/bin/tt5srv -wd $FN -nd" >&1
+echo "Type=simple" >&1
+echo "StandardOutput=syslog" >&1
+echo "StandardError=syslog" >&1
+echo "" >&1
+echo "[Install]" >&1
+echo "WantedBy=default.target" >&1
+systemctl --user daemon-reload
+systemctl --user enable $systemd
+systemctl --user start $systemd
