@@ -20,5 +20,5 @@ echo "Type=simple"
 echo "StandardOutput=syslog"
 echo "StandardError=syslog"
 echo ""
-echo "[Install]
+echo "[Install]"
 echo "WantedBy=default.target"
