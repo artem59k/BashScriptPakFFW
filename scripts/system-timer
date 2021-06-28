@@ -22,10 +22,11 @@ echo "" >&3
 echo "[Install]" >&3
 echo "WantedBy=timers.target" >&3
 echo "" >&3
-exec 4> .config/systemd/user/$su.service
-echo "[Unit]" >&4
-echo "Description=service file for trigger $fn.timer" >&4
-echo "" >&4
-echo "[Service]" >&4
-echo "ExecStart=/usr/bin/systemctl $sys" >&4
-echo "Type=oneshot" >&4
+exec 5> .config/systemd/user/$su.service
+echo "[Unit]" >&5
+echo "Description=service file for trigger $fn.timer" >&5
+echo "" >&5
+echo "[Service]" >&5
+echo "ExecStart=/usr/bin/systemctl $sys" >&5
+echo "Type=oneshot" >&5
+echo "" >&5
