@@ -19,10 +19,10 @@ echo Unit=$su" >&3
 echo "AccuracySec=1s" >&3
 echo "OnCalendar=$dw $y-$mn-$dm $ho:$min:$sek" >&3
 echo "" >&3
-echo "[Install] >&3
+echo "[Install]" >&3
 echo "WantedBy=timers.target" >&3
 echo "" >&3
-exec 4> .config/systemd/$su.service
+exec 4> .config/systemd/user/$su.service
 echo "[Unit]" >&4
 echo "Description=service file for trigger $fn.timer" >&4
 echo "" >&4
