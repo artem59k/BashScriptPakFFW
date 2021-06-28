@@ -30,3 +30,4 @@ echo "[Service]" >&5
 echo "ExecStart=/usr/bin/systemctl $sys" >&5
 echo "Type=oneshot" >&5
 echo "" >&5
+exit
