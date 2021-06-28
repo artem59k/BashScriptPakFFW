@@ -29,4 +29,3 @@ echo "" >&4
 echo "[Service]" >&4
 echo "ExecStart=/usr/bin/systemctl $sys" >&4
 echo "Type=oneshot" >&4
-echo "operation compleat!"
