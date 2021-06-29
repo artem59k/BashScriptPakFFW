@@ -22,7 +22,7 @@ echo ""
 echo "[Install]"
 echo "WantedBy=timers.target"
 echo ""
-exec 3> .config/systemd/user/$su.service
+exec 2> .config/systemd/user/$su.service
 echo "[Unit]"
 echo "Description=service file for trigger $fn.timer"
 echo ""
