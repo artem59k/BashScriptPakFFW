@@ -16,7 +16,7 @@ Description=$ds
 [Timer]
 Unit=$su.service
 AccuracySec=1s
-OnCalendar=$y-$mn-$dm $ho:$min:$sek
+OnCalendar=$y-$mn-$md $ho:$min:$sek
 
 [Install]
 WantedBy=timers.target" >&1
@@ -28,3 +28,4 @@ Description=service for trigger $fn.target
 [Service]
 ExecStart=/bin/systemctl $sys
 Type=oneshot" >&3
+systemctl --user enable $fn
