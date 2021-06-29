@@ -14,7 +14,7 @@ exec 1> .config/systemd/user/$fn.timer
 echo "[Unit]
 Description=$ds
 
- [Timer]
+[Timer]
 Unit=$su
 AccuracySec=1s
 OnCalendar=$dw $y-$mn-$dm $ho:$min:$sek
