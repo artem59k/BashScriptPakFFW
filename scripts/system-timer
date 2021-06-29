@@ -29,5 +29,5 @@ Description=service for trigger $fn.target
 
 [Service]
 ExecStart=/bin/systemctl $sys
-Type=oneshot"
-echo ""
+Type=oneshot" >&3
+echo "" >&3
