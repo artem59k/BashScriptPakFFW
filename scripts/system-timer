@@ -23,4 +23,3 @@ echo "[Install]" >&1
 echo "WantedBy=timers.target" >&1
 echo "" >&1
 exec 1>&-
-echo "my test"
