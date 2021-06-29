@@ -1,5 +1,5 @@
- read -e -p "please: enter name offsystemd timer" fn
- read -e -p "Please: enter description yor systemd-timer" ds
+read -e -p "please: enter name offsystemd timer" fn
+read -e -p "Please: enter description yor systemd-timer" ds
 read -e -p "Please: enter name off unit file, Which should be linked to the timer this file be generated automatykly." su
 read -e -p "Please: enter 3 characters for the day of the week. with a capital letter or a * symbol to trigger on any day of the week" dw
 read -e -p "Please: enter 4 digits of the year. Or enter the * character to trigger the timer in any year." y
