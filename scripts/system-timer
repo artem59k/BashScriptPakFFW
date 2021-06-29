@@ -11,17 +11,16 @@ read -e -p "Please: enter the seconds from 00 to 59. Or the * symbol for rolling
 read -e -p "Please: enter the systemctl command" sys
 echo "Done! your systemd timer is generated! You can run the standard systemctl commands, just specify them in the name: $fn.timer"
 exec 1> .config/systemd/user/$fn.timer
-echo "[Unit]" >&1
-echo "Description=$ds" >&1
-echo "" >&1"
-echo "[Timer]" >&1
-echo Unit=$su" >&1
-echo "AccuracySec=1s" >&1
-echo "OnCalendar=$dw $y-$mn-$dm $ho:$min:$sek" >&1
-echo "" >&1
-echo "[Install]" >&1
-echo "WantedBy=timers.target" >&1
-echo "" >&1
+echo "[Unit]
+Description=$ds
+
+ [Timer]
+Unit=$su
+AccuracySec=1s
+OnCalendar=$dw $y-$mn-$dm $ho:$min:$sek
+
+[Install]
+WantedBy=timers.target" >&1
 exec 1>&-
 exec 3> .config/systemd/user/$su.service
 echo "[Unit]
@@ -30,4 +29,3 @@ Description=service for trigger $fn.target
 [Service]
 ExecStart=/bin/systemctl $sys
 Type=oneshot" >&3
-echo "" >&3
