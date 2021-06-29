@@ -13,7 +13,7 @@ echo "Done! your systemd timer is generated! You can run the standard systemctl 
 exec 1> .config/systemd/user/$fn.timer
 echo "[Unit]" >&1
 echo "Description=$ds" >&1
-echo " >&1"
+echo "" >&1"
 echo "[Timer]" >&1
 echo Unit=$su" >&1
 echo "AccuracySec=1s" >&1
