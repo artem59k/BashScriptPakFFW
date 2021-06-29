@@ -24,11 +24,3 @@ echo "WantedBy=timers.target" >&1
 echo "" >&1
 exec 1>&-
 echo "my test"
-exec 2> .config/systemd/user/$su.service
-echo "[Unit]"
-echo "Description=service file for trigger $fn.timer"
-echo ""
-echo "[Service]"
-echo "ExecStart=/usr/bin/systemctl $sys"
-echo "Type=oneshot"
-echo ""
