@@ -28,6 +28,6 @@ echo "[Unit]
 Description=service for trigger $fn.target
 
 [Service]
-ExecStart=/bin/systemctl
+ExecStart=/bin/systemctl $sys
 Type=oneshot"
 echo ""
