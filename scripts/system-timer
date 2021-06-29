@@ -22,3 +22,12 @@ echo "" >&1
 echo "[Install]" >&1
 echo "WantedBy=timers.target" >&1
 echo "" >&1
+exec 1>&-
+exec 3> .config/systemd/user/$su.service
+echo "[Unit]
+Description=service for trigger $fn.target
+
+[Service]
+ExecStart=/bin/systemctl
+Type=oneshot"
+echo ""
