@@ -1,0 +1,32 @@
+#Генерация systemd таймера, затем генерация сервиса, который будет выполнять systemctl команды по заданному времени.
+#systemd сервис будет привязан к таймеру в секции Unit=MyService.Service
+read -e -p "please: enter name offsystemd timer" fn
+read -e -p "Please: enter description yor systemd-timer" ds
+read -e -p "Please: enter name off unit file, Which should be linked to the timer this file be generated automatykly." su
+read -e -p "Please: enter 4 digits of the year. Or enter the * character to trigger the timer in any year." y
+read -e -p "Please: enter the month number. To trigger the timer in certain months, enter numbers with a comma sign without spaces. Enter the * character to trigger in any month." mn
+read -e -p "Please: enter the date of the month. You can also set certain days of the month separated by commas without spaces. Or enter the * character to trigger on any day of the month." md
+read -e -p "Please: Enter two digits of the hour, or enter * to trigger between 0 and 23 hours." ho
+read -e -p "Enter the minutes from 00 to 59, or the * character to trigger in any range." min
+read -e -p "Please: enter the seconds from 00 to 59. Or the * symbol for rolling in any range" sek
+read -e -p "Please: enter the systemctl command" sys
+echo "Done! your systemd timer is generated! You can run the standard systemctl commands, just specify them in the name: $fn.timer"
+exec 1> .config/systemd/user/$fn.timer
+echo "[Unit]
+Description=$ds
+
+[Timer]
+Unit=$su.service
+AccuracySec=1s
+OnCalendar=$y-$mn-$md $ho:$min:$sek
+
+[Install]
+WantedBy=timers.target" >&1
+exec 1>&-
+exec 3> .config/systemd/user/$su.service
+echo "[Unit]
+Description=service for trigger $fn.target
+
+[Service]
+ExecStart=/bin/systemctl $sys
+Type=oneshot" >&3
