@@ -2,4 +2,5 @@
 #Необходимо использовать при первой настройке нового пользователя: сразу после входа на сервер.
 mkdir .config/systemd
 mkdir .config/systemd/user
+loginctl enable-linger
 echo "derectorys creatit."

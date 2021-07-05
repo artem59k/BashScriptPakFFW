@@ -1,3 +1,5 @@
+#Генерация systemd таймера, затем генерация сервиса, который будет выполнять systemctl команды по заданному времени.
+#systemd сервис будет привязан к таймеру в секции Unit=MyService.Service
 read -e -p "please: enter name offsystemd timer" fn
 read -e -p "Please: enter description yor systemd-timer" ds
 read -e -p "Please: enter name off unit file, Which should be linked to the timer this file be generated automatykly." su
@@ -28,4 +30,3 @@ Description=service for trigger $fn.target
 [Service]
 ExecStart=/bin/systemctl $sys
 Type=oneshot" >&3
-systemctl --user enable $fn.timer
