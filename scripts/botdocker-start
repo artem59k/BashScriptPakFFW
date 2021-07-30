@@ -1,3 +1,8 @@
+	#Скрипт для настройки и запуска TTMedia бота в контейнере докера
+#Спрашивает некоторые данные: такие как путь к папке с конфигурационным файлом, и другие настройки в секциях конфигурации бота.
+#Внимание, использовать внутри пользователя.
+#Чтобы работало всё корректно: добавте пользователя в группу docker следущей командой
+#usermod имя пользователя -aG docker с правами sudo или root
 	read -e -p "enter full path for data bot" datafolder
 read -e -p "enter name of bot container" title
 PS3="select the language of the bot."
@@ -105,4 +110,4 @@ echo "{
     }
 }" >&1
 chmod -R 777 $datafolder
-docker run --restart unless-stopped --rm --name $title --network="host" -dv $datafolder:/home/ttbot/data ttmediabot
+docker run --restart unless-stopped --name $title --network="host" -dv $datafolder:/home/ttbot/data ttmediabot
