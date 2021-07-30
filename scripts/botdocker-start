@@ -34,7 +34,7 @@ echo "default service: $sv"
 break
 done
 read -e -p "Enter the full path to the log file. It is also unnecessary to write the file name. It will be written automatically." log
-exec 1> $c.json
+exec 1> $datafolder/config.json
 echo "{
     \"general\": {
         \"language\": \"$leng\",
