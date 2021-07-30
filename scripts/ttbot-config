@@ -1,0 +1,105 @@
+read -e -p "enter the path of the configuration file. without extension .json" c
+PS3="select the language of the bot."
+select leng in en ru tr
+do
+echo "language : $leng"
+break
+done
+PS3="enable or desable send_channel_messages. True enable or false disable."
+select cm in true false
+do
+echo "send_channel_messages: $cm"
+break
+done
+read -e -p "this time, enter the full path to the folder where the cache file will be located. The file name is not required. It will be written automatically" cf
+read -e -p "after how many seconds should the bot delete its uploaded file in the channel?" df
+read -e -p "enter the default volume. It is not recommended to set 100" v
+read -e -p "enter the maximum volume. The maximum can be set to 100" mv
+read -e -p "enter host adress" adress
+read -e -p "enter tcp port" tcp
+read -e -p "Enter udp port" udp
+read -e -p "enter nick name" nick
+read -e -p "enter gender for bot" g
+read -e -p "enter status msg for bot" smsg
+read -e -p "enter user name for bot" user
+read -s -e -p "enter password for user" password
+read -e -p "enter the path to the channel where the bot should connect. For example, /music or /music / bot/" tt
+read -s -e -p "enter password of channel. if the channel is without a password, then just press enter." ttp
+echo "an administrator account in Teamtalk will be able to fully manage the bot. Remotely, you can change the list of administrators via the ua command. By default, the user is admin"
+read -e -p "Here you can insert your page's token on vk.com. If for some reason you have not created a token, just press  enter." tokin
+PS3="select default media service"
+select sv in vk yt
+do
+echo "default service: $sv"
+break
+done
+read -e -p "Enter the full path to the log file. It is also unnecessary to write the file name. It will be written automatically." log
+exec 1> $c.json
+echo "{
+    \"general\": {
+        \"language\": \"$leng\",
+        \"send_channel_messages\": $cm,
+        \"cache_file_name\": \"$cf/TTMediaBotCache.dat\",
+        \"blocked_commands\": [],
+        \"delete_uploaded_files_after\": $df,
+        \"time_format\": \"%H:%M\",
+        \"load_event_handlers\": false,
+        \"event_handlers_file_name\": \"event_handlers.py\"
+    },
+    \"sound_devices\": {
+        \"output_device\": 0,
+        \"input_device\": 0
+    },
+    \"player\": {
+        \"default_volume\": $v,
+        \"max_volume\": $mv,
+        \"volume_fading\": true,
+        \"volume_fading_interval\": 0.025,
+        \"seek_step\": 5,
+        \"player_options\": {
+            \"video\": false,
+            \"ytdl\": false
+        }
+    },
+    \"teamtalk\": {
+        \"hostname\": \"$adress\",
+        \"tcp_port\": $tcp,
+        \"udp_port\": $udp,
+        \"encrypted\": false,
+        \"nickname\": \"$nick\",
+        \"status\": \"$smsg\",
+        \"gender\": \"$g\",
+        \"username\": \"$user\",
+        \"password\": \"$password\",
+        \"channel\": \"$tt\",
+        \"channel_password\": \"$ttp\",
+        \"license_name\": \"\",
+        \"license_key\": \"\",
+        \"reconnection_attempts\": -1,
+        \"reconnection_timeout\": 10,
+        \"users\": {
+            \"admins\": [
+                \"admin\"
+            ],
+            \"banned_users\": []
+        }
+    },
+    \"services\": {
+        \"available_services\": {
+            \"vk\": {
+                \"token\": \"$tokin\"
+            },
+            \"yt\": {}
+        },
+        \"default_service\": \"$sv\"
+    },
+    \"logger\": {
+        \"log\": true,
+        \"level\": \"INFO\",
+        \"format\": \"%(levelname)s [%(asctime)s]: %(message)s in %(threadName)s file: %(filename)s line %(lineno)d function %(funcName)s\",
+        \"mode\": \"FILE\",
+        \"file_name\": \"$log/TTMediaBot.log\",
+        \"max_file_size\": 0,
+        \"backup_count\": 0
+    }
+}"
