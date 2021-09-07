@@ -1,0 +1,112 @@
+	#Скрипт для настройки и запуска TTMedia бота в контейнере докера
+#Спрашивает некоторые данные: такие как путь к папке с конфигурационным файлом, и другие настройки в секциях конфигурации бота.
+#Внимание, использовать внутри пользователя.
+#Чтобы работало всё корректно: добавте пользователя в группу docker следущей командой
+#usermod имя пользователя -aG docker с правами sudo или root
+	read -e -p "enter full path for data bot" datafolder
+read -e -p "enter name of bot container" title
+PS3="select the language of the bot."
+select leng in en ru tr
+do
+echo "language : $leng"
+break
+done
+PS3="enable or desable send_channel_messages. True enable or false disable."
+select cm in true false
+do
+echo "send_channel_messages: $cm"
+break
+done
+read -e -p "after how many seconds should the bot delete its uploaded file in the channel?" df
+read -e -p "enter the default volume. It is not recommended to set 100" v
+read -e -p "enter the maximum volume. The maximum can be set to 100" mv
+		read -e -p "enter host adress" adress
+read -e -p "enter tcp port" tcp
+read -e -p "Enter udp port" udp
+read -e -p "enter nick name" nick
+read -e -p "enter gender for bot" g
+read -e -p "enter status msg for bot" smsg
+read -e -p "enter user name for bot" user
+read -s -e -p "enter password for user" password
+read -e -p "enter the path to the channel where the bot should connect. For example, /music or /music / bot/" tt
+read -s -e -p "enter password of channel. if the channel is without a password, then just press enter." ttp
+echo "an administrator account in Teamtalk will be able to fully manage the bot. Remotely, you can change the list of administrators via the ua command. By default, the user is admin"
+PS3="select default media service"
+select sv in vk yt
+do
+echo "default service: $sv"
+break
+done
+mkdir $datafolder
+exec 1> $datafolder/config.json
+echo "{
+    \"general\": {
+        \"language\": \"$leng\",
+        \"send_channel_messages\": $cm,
+        \"cache_file_name\": \"TTMediaBotCache.dat\",
+        \"blocked_commands\": [],
+        \"delete_uploaded_files_after\": $df,
+        \"time_format\": \"%H:%M\",
+        \"load_event_handlers\": false,
+        \"event_handlers_file_name\": \"event_handlers.py\"
+    },
+    \"sound_devices\": {
+        \"output_device\": 0,
+        \"input_device\": 0
+    },
+    \"player\": {
+        \"default_volume\": $v,
+        \"max_volume\": $mv,
+        \"volume_fading\": true,
+        \"volume_fading_interval\": 0.025,
+        \"seek_step\": 5,
+        \"player_options\": {
+            \"video\": false,
+            \"ytdl\": false
+        }
+    },
+    \"teamtalk\": {
+        \"hostname\": \"$adress\",
+        \"tcp_port\": $tcp,
+        \"udp_port\": $udp,
+        \"encrypted\": false,
+        \"nickname\": \"$nick\",
+        \"status\": \"$smsg\",
+        \"gender\": \"$g\",
+        \"username\": \"$user\",
+        \"password\": \"$password\",
+        \"channel\": \"$tt\",
+        \"channel_password\": \"$ttp\",
+        \"license_name\": \"\",
+        \"license_key\": \"\",
+        \"reconnection_attempts\": -1,
+        \"reconnection_timeout\": 10,
+        \"users\": {
+            \"admins\": [
+                \"admin\"
+            ],
+            \"banned_users\": []
+        }
+    },
+    \"services\": {
+        \"available_services\": {
+            \"vk\": {
+                \"token\": \"670a9555ac99c80bb07c9b8a19270e0d75f299842d4dd678c43b4847f54e6e10782857a7a8f8b8a022035\"
+            },
+            \"yt\": {}
+        },
+        \"default_service\": \"$sv\"
+    },
+    \"logger\": {
+        \"log\": true,
+        \"level\": \"INFO\",
+        \"format\": \"%(levelname)s [%(asctime)s]: %(message)s in %(threadName)s file: %(filename)s line %(lineno)d function %(funcName)s\",
+        \"mode\": \"FILE\",
+        \"file_name\": \"TTMediaBot.log\",
+        \"max_file_size\": 0,
+        \"backup_count\": 0
+    }
+}" >&1
+exec 1>&-
+chmod -R 777 $datafolder
+docker run --restart unless-stopped --name $title --network="host" -dv $datafolder:/home/ttbot/data ttmediabot
