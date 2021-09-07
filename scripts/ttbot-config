@@ -1,4 +1,5 @@
 read -e -p "enter the path of the configuration file. without extension .json" c
+read -e -p "Enter full  path of binary bot folder" folder
 PS3="select the language of the bot."
 select leng in en ru tr
 do
@@ -11,7 +12,7 @@ do
 echo "send_channel_messages: $cm"
 break
 done
-read -e -p "this time, enter the full path to the folder where the cache file will be located. The file name is not required. It will be written automatically" cf
+read -e -p "this time, enter the full path to the folder where the cache file will be located. The file name is not required. It will be written automatically: else it iz apsolute pathe,too enter / for end path" cf
 read -e -p "after how many seconds should the bot delete its uploaded file in the channel?" df
 read -e -p "enter the default volume. It is not recommended to set 100" v
 read -e -p "enter the maximum volume. The maximum can be set to 100" mv
@@ -25,7 +26,6 @@ read -e -p "enter user name for bot" user
 read -s -e -p "enter password for user" password
 read -e -p "enter the path to the channel where the bot should connect. For example, /music or /music / bot/" tt
 read -s -e -p "enter password of channel. if the channel is without a password, then just press enter." ttp
-echo "an administrator account in Teamtalk will be able to fully manage the bot. Remotely, you can change the list of administrators via the ua command. By default, the user is admin"
 read -e -p "Here you can insert your page's token on vk.com. If for some reason you have not created a token, just press  enter." tokin
 PS3="select default media service"
 select sv in vk yt
@@ -33,13 +33,14 @@ do
 echo "default service: $sv"
 break
 done
-read -e -p "Enter the full path to the log file. It is also unnecessary to write the file name. It will be written automatically." log
+read -e -p "Enter the full path to the log file. It is also unnecessary to write the file name. It will be written automatically. Else it iz apsalute path too enter / in end " log
+read -e -p "Enter name of systemd unit file.service insert automaticly" service
 exec 1> $c.json
 echo "{
     \"general\": {
         \"language\": \"$leng\",
         \"send_channel_messages\": $cm,
-        \"cache_file_name\": \"$cf/TTMediaBotCache.dat\",
+        \"cache_file_name\": \"$cfTTMediaBotCache.dat\",
         \"blocked_commands\": [],
         \"delete_uploaded_files_after\": $df,
         \"time_format\": \"%H:%M\",
@@ -102,4 +103,17 @@ echo "{
         \"max_file_size\": 0,
         \"backup_count\": 0
     }
-}"
+}" >&1
+exec 3> .config/systemd/user/$service.service
+echo "[Unit]
+Description=TTMediaBot systemd unit file. Generaitid  by BashScriptPakFFW
+After=network.target
+
+[Service]
+ExecStart=$bot-folder/TTMediaBot.sh -c $c.json
+
+[Install]
+WantedBy=default.target" >&3
+systemctl --user daemon-reload
+systemctl --user enable $service
+systemctl --user start $service
