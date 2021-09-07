@@ -110,7 +110,7 @@ Description=TTMediaBot systemd unit file. Generaitid  by BashScriptPakFFW
 After=network.target
 
 [Service]
-ExecStart=$bot-folder/TTMediaBot.sh -c $c.json
+ExecStart=$folder/TTMediaBot.sh -c $c.json
 
 [Install]
 WantedBy=default.target" >&3
