@@ -12,3 +12,4 @@ pip3 install -r requirements.txt
 python3 tools/ttsdk_downloader.py
 #компелируем локализацию
 python3 tools/compile_locales.py
+echo "Bot instalt."
