@@ -30,7 +30,7 @@ read -e -p "enter user name for bot" user
 read -s -e -p "enter password for user" password
 read -e -p "enter the path to the channel where the bot should connect. For example, /music or /music / bot/" tt
 read -s -e -p "enter password of channel. if the channel is without a password, then just press enter." ttp
-echo "an administrator account in Teamtalk will be able to fully manage the bot. Remotely, you can change the list of administrators via the ua command. By default, the user is admin"
+read -e -p "enter vk tokin" tokin
 PS3="select default media service"
 select sv in vk yt
 do
@@ -91,7 +91,7 @@ echo "{
     \"services\": {
         \"available_services\": {
             \"vk\": {
-                \"token\": \"670a9555ac99c80bb07c9b8a19270e0d75f299842d4dd678c43b4847f54e6e10782857a7a8f8b8a022035\"
+                \"token\": \"$tokin\"
             },
             \"yt\": {}
         },
