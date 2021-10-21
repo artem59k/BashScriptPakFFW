@@ -1,0 +1,4 @@
+read -p "Привет. Я создам пользователя ftp для сайта. Внимание: - этот скрипт настроен на сервер proftpd. Нажмите Enter, чтобы продолжить."
+read -e -p "введите имя пользователя ftp" user
+Read -e -p "Куда адресовать пользователя? Введите домашнюю папку сайта. Нужно указать, например, site.ru" folder
+ftpasswd -passwd -file=/etc/proftpd/ftpd.passwd -name=$user -uid=33 -gid=33 -home=/var/www/html/$folder -shell=/bin/false

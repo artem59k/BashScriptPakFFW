@@ -1,0 +1,47 @@
+echo "Привет. Я быстро поставлю вам сайт wortpress, настрою ssl сертификат через мастер настройки certbot, помогу усилить безопасность бд для Mariadb. Пройдите несколько этапов, чтобы я знал как и что вам настроить."
+echo "Установка веп сервера"
+apt install -y apache2
+echo "Ура! Теперь ваша система может принемать http запросы!"
+a2enmod rewrite
+a2enmod ssl
+read -e -p "Введите доменное имя вашего сайта. Обязательное условие: нужно прописать ns записи на ip сервера." d
+exec 3> /etc/apache2/sites-available/$d.conf
+echo "<VirtualHost *:80>
+ServerName $d
+
+DocumentRoot /var/www/html/$d
+
+Redirect permanent / https://$d/
+</VirtualHost>
+
+<VirtualHost *:443>
+ServerName $d
+
+DocumentRoot /var/www/html/$d
+
+<Directory /var/www/html/$d>
+options -indexes
+AllowOverride all
+</Directory>
+SSLEngine on
+SSLCertificateFile /etc/letsencrypt/live/$d/fullchain.pem
+SSLCertificateKeyFile /etc/letsencrypt/live/$d/privkey.pem
+
+</VirtualHost>" >&3
+exec 3>&-
+echo "Готово: теперь ставим всё необходимое для сайта"
+a2ensite $d
+apt install -y php php-mysql php-curl php-dom php-mbstring php-imagick php-zip php-gd mariadb-server mariadb-client letsencrypt
+wget https://ru.wordpress.org/latest-ru_RU.tar.gz
+tar xvf latest-ru_RU.tar.gz
+cd wordpress
+mkdir /var/www/html/$d
+cp -r * /var/www/html/$d
+chown -R www-data:www-data /var/www/html/$d
+read -p "Теперь необходимо усилить безопасность сервера баз данных. Нажмите enter для продолжения"
+mysql_secure_installation
+read -p "Продолжаем. Я запущу программу для получения сертификата, выберете  пункт 1. А пока нажмите enter."
+systemctl stop apache2
+certbot certonly
+systemctl start apache2
+echo "Готово: все компоненты установлены. Только остаётся вам создать БД и запустить популярную установку сайта по адресу https://$d"
