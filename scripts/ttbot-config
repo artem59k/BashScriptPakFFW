@@ -41,13 +41,13 @@ done
 PS3="enable or disable Vk service true is enabled, and false is disabled"
 select VkStats in true false
 do
-echo "Using the Vk service is set to $VkStatus
+echo "Using the Vk service is set to $VkStatus"
 break
 done
 PS3="Using the Yt service: true enabled, false disabled"
 select YtStats in true false
 do
-echo "using of the Yt service is set to $YtStats
+echo "using of the Yt service is set to $YtStats"
 break
 done
 read -e -p "Enter the full path to the log file. It is also unnecessary to write the file name. It will be written automatically. Else it iz apsalute path too enter / in end " log
