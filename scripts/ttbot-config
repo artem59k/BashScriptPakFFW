@@ -1,9 +1,8 @@
 #Мастер настройки для бота в Teamtalk.
 #Написан по собственной инициативе: для удобной и быстрой настройки приложения.
 #Внимание: скрипт создаёт systemd сервис файл внутри пользователя. Это является более эргономично и безопасно.
-#Используйте /  в конце относительного или обсалютного пути: например: /home/user/bot/
-#Также выяснилось, что если вы работаете в домашней папке пользователя через консоль, то просто можно указать имя файла без расширения. Systemd поймает относительный путь. Также работает это и с папками: bot/: Например, если, вы находитесь в корне вашего пользователя, то можно просто указать имя файла без расширения Например (mybot)
-#Косую черту в конце нужно указать для того, чтобы правильно прописался путь для генерации нужных файлов. Это нужно только в том случае, когда вы указываете пути для журнала, кеша, и бинарной папки бота, а также, если вы хотите, чтоб конфиг бота сгенерировался в определённой папке: вы можете указать например вот так: (bots/myconfig) Внимание: папка bots должна быть создана.
+#Теперь скрипт вставит косую черту в конец обсалютного пути. Работает это с указанием бинарной папки с программой.
+#мастер направит пользователя в домашнюю папку автоматически, по этому в некоторых случаях можно использовать относительные пути. Например, при имени файла конфигурации: просто укажите имя файла без расширения. Кеш бота будет для удобства привязан к имени файла конфигурации и будет с расширением .dat. По этому лучше указывать имя файла с настройками под определённый чат.
 cd
 read -e -p "enter the path of the configuration file. without extension .json" c
 read -e -p "Enter full  path of binary bot folder" folder
@@ -19,7 +18,6 @@ do
 echo "send_channel_messages: $cm"
 break
 done
-read -e -p "this time, enter the full path to the folder where the cache file will be located. The file name is not required. It will be written automatically: else it iz apsolute pathe,too enter / for end path" cf
 read -e -p "after how many seconds should the bot delete its uploaded file in the channel?" df
 read -e -p "enter the default volume. It is not recommended to set 100" v
 read -e -p "enter the maximum volume. The maximum can be set to 100" mv
@@ -33,11 +31,23 @@ read -e -p "enter user name for bot" user
 read -s -e -p "enter password for user" password
 read -e -p "enter the path to the channel where the bot should connect. For example, /music or /music / bot/" tt
 read -s -e -p "enter password of channel. if the channel is without a password, then just press enter." ttp
-read -e -p "Here you can insert your page's token on vk.com. If for some reason you have not created a token, just press  enter." tokin
+read -e -p "Here you can insert your page's token on vk.com. If for some reason you have not created a token, just press  enter." token
 PS3="select default media service"
 select sv in vk yt
 do
 echo "default service: $sv"
+break
+done
+PS3="enable or disable Vk service true is enabled, and false is disabled"
+select VkStats in true false
+do
+echo "Using the Vk service is set to $VkStatus
+break
+done
+PS3="Using the Yt service: true enabled, false disabled"
+select YtStats in true false
+do
+echo "using of the Yt service is set to $YtStats
 break
 done
 read -e -p "Enter the full path to the log file. It is also unnecessary to write the file name. It will be written automatically. Else it iz apsalute path too enter / in end " log
@@ -47,12 +57,10 @@ echo "{
     \"general\": {
         \"language\": \"$leng\",
         \"send_channel_messages\": $cm,
-        \"cache_file_name\": \"$cfTTMediaBotCache.dat\",
+        \"cache_file_name\": \"$c-Cash.dat\",
         \"blocked_commands\": [],
         \"delete_uploaded_files_after\": $df,
         \"time_format\": \"%H:%M\",
-        \"load_event_handlers\": false,
-        \"event_handlers_file_name\": \"event_handlers.py\"
     },
     \"sound_devices\": {
         \"output_device\": 0,
@@ -64,10 +72,6 @@ echo "{
         \"volume_fading\": true,
         \"volume_fading_interval\": 0.025,
         \"seek_step\": 5,
-        \"player_options\": {
-            \"video\": false,
-            \"ytdl\": false
-        }
     },
     \"teamtalk\": {
         \"hostname\": \"$adress\",
@@ -92,14 +96,15 @@ echo "{
             \"banned_users\": []
         }
     },
-    \"services\": {
-        \"available_services\": {
-            \"vk\": {
-                \"token\": \"$tokin\"
-            },
-            \"yt\": {}
+\"services\": {
+        "default_service": "$sv",
+        \"vk\": {
+            \"enabled\": $VkStats,
+            \"token\": "$token"
         },
-        \"default_service\": \"$sv\"
+        \"yt\": {
+            \"enabled\": $YtStats
+        }
     },
     \"logger\": {
         \"log\": true,

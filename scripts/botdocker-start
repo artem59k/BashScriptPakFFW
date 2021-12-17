@@ -20,7 +20,7 @@ done
 read -e -p "after how many seconds should the bot delete its uploaded file in the channel?" df
 read -e -p "enter the default volume. It is not recommended to set 100" v
 read -e -p "enter the maximum volume. The maximum can be set to 100" mv
-		read -e -p "enter host adress" adress
+read -e -p "enter host adress" adress
 read -e -p "enter tcp port" tcp
 read -e -p "Enter udp port" udp
 read -e -p "enter nick name" nick
@@ -30,11 +30,23 @@ read -e -p "enter user name for bot" user
 read -s -e -p "enter password for user" password
 read -e -p "enter the path to the channel where the bot should connect. For example, /music or /music / bot/" tt
 read -s -e -p "enter password of channel. if the channel is without a password, then just press enter." ttp
-read -e -p "enter vk tokin" tokin
+read -e -p "Here you can insert your page's token on vk.com. If for some reason you have not created a token, just press  enter." token
 PS3="select default media service"
 select sv in vk yt
 do
 echo "default service: $sv"
+break
+done
+PS3="enable or disable Vk service true is enabled, and false is disabled"
+select VkStats in true false
+do
+echo "Using the Vk service is set to $VkStatus
+break
+done
+PS3="Using the Yt service: true enabled, false disabled"
+select YtStats in true false
+do
+echo "using of the Yt service is set to $YtStats
 break
 done
 mkdir $datafolder
@@ -43,12 +55,10 @@ echo "{
     \"general\": {
         \"language\": \"$leng\",
         \"send_channel_messages\": $cm,
-        \"cache_file_name\": \"TTMediaBotCache.dat\",
+        \"cache_file_name\": \"$c-Cash.dat\",
         \"blocked_commands\": [],
         \"delete_uploaded_files_after\": $df,
         \"time_format\": \"%H:%M\",
-        \"load_event_handlers\": false,
-        \"event_handlers_file_name\": \"event_handlers.py\"
     },
     \"sound_devices\": {
         \"output_device\": 0,
@@ -60,10 +70,6 @@ echo "{
         \"volume_fading\": true,
         \"volume_fading_interval\": 0.025,
         \"seek_step\": 5,
-        \"player_options\": {
-            \"video\": false,
-            \"ytdl\": false
-        }
     },
     \"teamtalk\": {
         \"hostname\": \"$adress\",
@@ -88,25 +94,25 @@ echo "{
             \"banned_users\": []
         }
     },
-    \"services\": {
-        \"available_services\": {
-            \"vk\": {
-                \"token\": \"$tokin\"
-            },
-            \"yt\": {}
+\"services\": {
+        "default_service": "$sv",
+        \"vk\": {
+            \"enabled\": $VkStats,
+            \"token\": "$token"
         },
-        \"default_service\": \"$sv\"
+        \"yt\": {
+            \"enabled\": $YtStats
+        }
     },
     \"logger\": {
         \"log\": true,
         \"level\": \"INFO\",
         \"format\": \"%(levelname)s [%(asctime)s]: %(message)s in %(threadName)s file: %(filename)s line %(lineno)d function %(funcName)s\",
         \"mode\": \"FILE\",
-        \"file_name\": \"TTMediaBot.log\",
+        \"file_name\": \"$log/TTMediaBot.log\",
         \"max_file_size\": 0,
         \"backup_count\": 0
     }
 }" >&1
-exec 1>&-
 chmod -R 777 $datafolder
 docker run --restart unless-stopped --name $title --network="host" -dv $datafolder:/home/ttbot/data ttmediabot

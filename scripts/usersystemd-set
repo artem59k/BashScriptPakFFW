@@ -1,6 +1,6 @@
-#Скрипт для быстрого создания папки пользовательских сервисов systemd. 
-#Необходимо использовать при первой настройке нового пользователя: сразу после входа на сервер.
-mkdir .config/systemd
-mkdir .config/systemd/user
-loginctl enable-linger
-echo "derectorys creatit."
+#Глобальное создание пользовательских папок systemd.
+#После выполнения данного скрипта при создании новых пользователей дериктории systemd будут добавлены автоматически.
+mkdir /etc/skel/.config
+mkdir /etc/skel/.config/systemd
+mkdir /etc/skel/systemd/user
+echo "done!"
