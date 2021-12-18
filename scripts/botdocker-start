@@ -95,10 +95,10 @@ echo "{
         }
     },
 \"services\": {
-        "default_service": "$sv",
+        \"default_service\": \"$sv\",
         \"vk\": {
             \"enabled\": $VkStats,
-            \"token\": "$token"
+            \"token\": \"$token\"
         },
         \"yt\": {
             \"enabled\": $YtStats

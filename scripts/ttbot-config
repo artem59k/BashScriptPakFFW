@@ -50,7 +50,6 @@ do
 echo "using of the Yt service is set to $YtStats"
 break
 done
-read -e -p "Enter the full path to the log file. It is also unnecessary to write the file name. It will be written automatically. Else it iz apsalute path too enter / in end " log
 read -e -p "Enter name of systemd unit file.service insert automaticly" service
 exec 1> $c.json
 echo "{
@@ -60,7 +59,7 @@ echo "{
         \"cache_file_name\": \"$c-Cash.dat\",
         \"blocked_commands\": [],
         \"delete_uploaded_files_after\": $df,
-        \"time_format\": \"%H:%M\",
+        \"time_format\": \"%H:%M\"
     },
     \"sound_devices\": {
         \"output_device\": 0,
@@ -97,10 +96,10 @@ echo "{
         }
     },
 \"services\": {
-        "default_service": "$sv",
+        \"default_service\": \"$sv\",
         \"vk\": {
             \"enabled\": $VkStats,
-            \"token\": "$token"
+            \"token\": \"$token\"
         },
         \"yt\": {
             \"enabled\": $YtStats
@@ -111,7 +110,7 @@ echo "{
         \"level\": \"INFO\",
         \"format\": \"%(levelname)s [%(asctime)s]: %(message)s in %(threadName)s file: %(filename)s line %(lineno)d function %(funcName)s\",
         \"mode\": \"FILE\",
-        \"file_name\": \"$log/TTMediaBot.log\",
+        \"file_name\": \"$c-BotLog.log\",
         \"max_file_size\": 0,
         \"backup_count\": 0
     }
