@@ -1,0 +1,10 @@
+#Скрипт установит csf.
+#Выполняйте его от супер пользователя
+apt install -y libwww-perl
+perl -e "use Time::HiRes"
+wget https://download.configserver.com/csf.tgz
+tar -xzf csf.tgz
+cd csf
+chmod 777 -R /root/csf
+sh install.sh
+perl /etc/csf/csftest.pl
