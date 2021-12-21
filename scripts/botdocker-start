@@ -69,7 +69,7 @@ echo "{
         \"max_volume\": $mv,
         \"volume_fading\": true,
         \"volume_fading_interval\": 0.025,
-        \"seek_step\": 5,
+        \"seek_step\": 5
     },
     \"teamtalk\": {
         \"hostname\": \"$adress\",
