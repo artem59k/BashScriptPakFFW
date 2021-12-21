@@ -1,2 +1,3 @@
-#script for updating the system and / or packages.
+#Скрипт обновляет системы debian/ubuntu.
+#Рекомендуется запускать его от супер пользователя, и/или пользователя, имеющего привелегии root.
 apt update; apt upgrade -y
