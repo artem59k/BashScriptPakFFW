@@ -6,6 +6,8 @@ cd /home
 git clone https://github.com/gumerov-amir/TTMediaBot.git
 #Входим в папку для дальнейших опираций
 cd TTMediaBot
+#Зададим разрешения на исполнение всех файлов бота
+chmod 777 -R /home/TTMediaBot
 #Устанавливаем требуемые модули Python
 pip3 install -r requirements.txt
 #Скачиваем Teamtalk sdk
