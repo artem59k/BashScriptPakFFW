@@ -17,3 +17,5 @@ cp scripts/site-startup /usr/local/bin
 cp scripts/ftp-user /usr/local/bin
 chmod +x /usr/local/bin/site-startup
 chmod +x /usr/local/bin/ftp-user
+cp scripts/updater /usr/local/bin
+chmod +x /usr/local/bin/updater
