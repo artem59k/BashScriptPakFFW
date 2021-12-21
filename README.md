@@ -5,4 +5,8 @@
 Для установки выполните файл с привелегиями суперпользователя или sudo install.sh, перед этим необходимо предоставить исполняемостьк файлу.
 
 # Контакты
+Artem59k:
 Telegram: https://t.me/arten59k
+loveprod-dev:
+Telegram:
+https://t.me/loveprod
