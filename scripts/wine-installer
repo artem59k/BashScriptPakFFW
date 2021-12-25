@@ -1,0 +1,6 @@
+#Этот скрипт установит wine на ваш сервер
+#Исполняется от пользователя root
+dpkg --add-architecture i386
+apt update
+apt install wine32
+echo "wine установлен успешно!"
