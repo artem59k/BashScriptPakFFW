@@ -7,6 +7,3 @@
 # Контакты
 Artem59k:
 Telegram: https://t.me/arten59k
-loveprod-dev:
-Telegram:
-https://t.me/loveprod
