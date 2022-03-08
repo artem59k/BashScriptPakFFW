@@ -11,7 +11,6 @@ ServerName $d
 
 DocumentRoot /var/www/html/$d
 
-Redirect permanent / https://$d/
 </VirtualHost>
 
 <VirtualHost *:443>
