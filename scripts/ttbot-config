@@ -4,53 +4,53 @@
 #Теперь скрипт вставит косую черту в конец обсалютного пути. Работает это с указанием бинарной папки с программой.
 #мастер направит пользователя в домашнюю папку автоматически, по этому в некоторых случаях можно использовать относительные пути. Например, при имени файла конфигурации: просто укажите имя файла без расширения. Кеш бота будет для удобства привязан к имени файла конфигурации и будет с расширением .dat. По этому лучше указывать имя файла с настройками под определённый чат.
 cd
-read -e -p "enter the path of the configuration file. without extension .json" c
-read -e -p "Enter full  path of binary bot folder" folder
-PS3="select the language of the bot."
+read -e -p "введите имя файла конфигурации. без расширения .json" c
+read -e -p "Введите полный путь к папке с исполняемыми файлами TTMediaBot Например: /home/TTMediaBot " folder
+PS3="Пожалуйста, выберете язык интерфейса бота."
 select leng in en ru tr
 do
-echo "language : $leng"
+echo "Язык установлен на: $leng"
 break
 done
-PS3="enable or desable send_channel_messages. True enable or false disable."
+PS3="Включить или отключить отправку сообщений в канал. True включено или  false отключено."
 select cm in true false
 do
-echo "send_channel_messages: $cm"
+echo "отправка сообщений в канал настроена на: $cm"
 break
 done
-read -e -p "after how many seconds should the bot delete its uploaded file in the channel?" df
-read -e -p "enter the default volume. It is not recommended to set 100" v
-read -e -p "enter the maximum volume. The maximum can be set to 100" mv
-read -e -p "enter host adress" adress
-read -e -p "enter tcp port" tcp
-read -e -p "Enter udp port" udp
-read -e -p "enter nick name" nick
-read -e -p "enter gender for bot" g
-read -e -p "enter status msg for bot" smsg
-read -e -p "enter user name for bot" user
-read -s -e -p "enter password for user" password
-read -e -p "enter the path to the channel where the bot should connect. For example, /music or /music / bot/" tt
-read -s -e -p "enter password of channel. if the channel is without a password, then just press enter." ttp
-read -e -p "Here you can insert your page's token on vk.com. If for some reason you have not created a token, just press  enter." token
-PS3="select default media service"
+read -e -p "через сколько секунд бот должен удалить свой загруженный файл в канале?" df
+read -e -p "введите громкость по умолчанию. Не рекомендуется устанавливать 100" v
+read -e -p "введите максимальную громкость. Максимальное значение может быть установлено на 100" mv
+read -e -p "введите адрес хоста. можно вписать localhost, для повышения производительности бота, если, он работает на одном сервере с teamtalk" adress
+read -e -p "введите tcp порт" tcp
+read -e -p "введите udp порт" udp
+read -e -p "Введите ник" nick
+read -e -p "Введите пол для бота. n: нейтральный, m: мужской, f: женский" g
+read -e -p "Введите статус для бота" smsg
+read -e -p "Введите имя пользователя для бота" user
+read -s -e -p "введите пароль пользователя" password
+read -e -p "введите путь к каналу, к которому должен подключиться бот. Например, /музыка или /музыка/bot" tt
+read -s -e -p "введите пароль канала. если канал без пароля, то просто нажмите enter." ttp
+read -e -p "Здесь вы можете вставить токен вашей страницы на vk.com . Если по какой-то причине вы не создали токен, просто нажмите enter." token
+PS3="Выберете медиасервис поумолчанию"
 select sv in vk yt
 do
-echo "default service: $sv"
+echo "сервис поумолчанию установлен на: $sv"
 break
 done
-PS3="enable or disable Vk service true is enabled, and false is disabled"
+PS3="включить или отключить сервис Вконтакте Значение true включено, а значение false отключено"
 select VkStats in true false
 do
-echo "Using the Vk service is set to $VkStatus"
+echo "Использование сервиса Вконтакте настроено на $VkStatus"
 break
 done
-PS3="Using the Yt service: true enabled, false disabled"
+PS3="Использование сервиса youtube: true включено, false отключено"
 select YtStats in true false
 do
-echo "using of the Yt service is set to $YtStats"
+echo "использование сервиса youtube настроено на $YtStats"
 break
 done
-read -e -p "Enter name of systemd unit file.service insert automaticly" service
+read -e -p "Введите имя файла systemd. Расширение .service подставится автоматически" service
 exec 1> $c.json
 echo "{
     \"general\": {
@@ -128,3 +128,4 @@ WantedBy=default.target" >&3
 systemctl --user daemon-reload
 systemctl --user enable $service
 systemctl --user start $service
+echo "Готово. Программа TTMediaBot настроена. Ожидайте бота на вашем сервере. Спасибо!"

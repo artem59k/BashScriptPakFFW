@@ -8,4 +8,5 @@ cd csf
 chmod 777 -R /root/csf
 sh install.sh
 perl /etc/csf/csftest.pl
-echo "csf installed successfully"
+echo "csf установлен успешно"
+#Спасибо Loveprod за предоставление скрипта.

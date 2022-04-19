@@ -1,16 +1,16 @@
-#Генерация systemd таймера, затем генерация сервиса, который будет выполнять systemctl команды по заданному времени.
+#Генерация systemd таймера, затем генерация сервиса, который будет выполнять команды по заданному времени.
 #systemd сервис будет привязан к таймеру в секции Unit=MyService.Service
-read -e -p "please: enter name offsystemd timer" fn
-read -e -p "Please: enter description yor systemd-timer" ds
-read -e -p "Please: enter name off unit file, Which should be linked to the timer this file be generated automatykly." su
-read -e -p "Please: enter 4 digits of the year. Or enter the * character to trigger the timer in any year." y
-read -e -p "Please: enter the month number. To trigger the timer in certain months, enter numbers with a comma sign without spaces. Enter the * character to trigger in any month." mn
-read -e -p "Please: enter the date of the month. You can also set certain days of the month separated by commas without spaces. Or enter the * character to trigger on any day of the month." md
-read -e -p "Please: Enter two digits of the hour, or enter * to trigger between 0 and 23 hours." ho
-read -e -p "Enter the minutes from 00 to 59, or the * character to trigger in any range." min
-read -e -p "Please: enter the seconds from 00 to 59. Or the * symbol for rolling in any range" sek
-read -e -p "Please: enter the systemctl command" sys
-echo "Done! your systemd timer is generated! You can run the standard systemctl commands, just specify them in the name: $fn.timer"
+read -e -p "пожалуйста, введите имя systemd таймера. Расширение .timer мы подставим автоматически" fn
+read -e -p "Пожалуйста, введите описание systemd таймера" ds
+read -e -p "Пожалуйста, введите имя сервисной службы, которую необходимо привязать к таймеру. Файл будет сгенерирован автоматически." su
+read -e -p "Пожалуйста, введите 4 цифры года, либо подстановочный знак *, для работы таймера в в любой год" y
+read -e -p "Пожалуйста, введите номер месяца. Чтобы запустить таймер в определённые месяцы, введите числа со знаком запятой без пробелов. Введите подстановочный символ * для срабатывании  в любом месяце." mn
+read -e -p "Пожалуйста: введите число месяца. Вы также можете установить определённые дни месяца, разделённые запятыми без пробелов. Или введите подстановочный символ * для срабатывания в любой день месяца." md
+read -e -p "Пожалуйста, введите две цифры соответствующего часа. Либо: введите подстановочный знак * звёздочки для срабатывания таймера от 00 до 23 часа соотведственно" ho
+read -e -p "введите две цифры номера минут от 00 до 59, для срабатывания в любой диапазон минут введите символ *" min
+read -e -p "Введите секунды от 00 до 59. Либо подстановочный символ * для срабатывания в любой диапазон секунд." sek
+read -e -p "Пожалуйста, введите любую команду. Представьте, что в терминале вы пишете команду с её аргументами. Мы подставим все требуемые пути автоматически для службы. Для выполнения простого скрипта, например, бэкапа перед скриптом нужно ввести bash, а затем путь до скрипта" sys
+echo "Готово! systemd таймер сгенерирован! Вы можете управлять таймером обычными systemctl командами и его название: $fn.timer"
 exec 1> .config/systemd/user/$fn.timer
 echo "[Unit]
 Description=$ds
@@ -28,5 +28,5 @@ echo "[Unit]
 Description=service for trigger $fn.target
 
 [Service]
-ExecStart=/bin/systemctl $sys
+ExecStart=/usr/bin/$sys
 Type=oneshot" >&3
