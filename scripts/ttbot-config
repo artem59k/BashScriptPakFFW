@@ -51,7 +51,7 @@ echo "использование сервиса youtube настроено на 
 break
 done
 read -e -p "Введите имя файла systemd. Расширение .service подставится автоматически" service
-exec 1> $c.json
+exec 3> $c.json
 echo "{
     \"general\": {
         \"language\": \"$leng\",
