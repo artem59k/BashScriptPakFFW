@@ -41,7 +41,7 @@ done
 PS3="включить или отключить сервис Вконтакте Значение true включено, а значение false отключено"
 select VkStats in true false
 do
-echo "Использование сервиса Вконтакте настроено на $VkStatus"
+echo "Использование сервиса Вконтакте настроено на $VkStats"
 break
 done
 PS3="Использование сервиса youtube: true включено, false отключено"
@@ -114,7 +114,7 @@ echo "{
         \"max_file_size\": 0,
         \"backup_count\": 0
     }
-}" >&1
+}" >&3
 exec 3> .config/systemd/user/$service.service
 echo "[Unit]
 Description=TTMediaBot systemd unit file. Generaitid  by BashScriptPakFFW
